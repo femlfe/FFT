@@ -4,6 +4,7 @@ using NAudio.Wave.SampleProviders;
 using MathNet.Numerics.IntegralTransforms;
 using System.Security.Cryptography;
 using System.Text;
+using System.Runtime.ConstrainedExecution;
 
 class Program
 {
@@ -227,6 +228,7 @@ class Program
         {
             foreach (uint hash in fingerprint)
             {
+                Console.WriteLine("");
                 writer.Write(hash);
             }
         }
