@@ -2,23 +2,19 @@
 using NAudio.Wave;
 using NAudio.Wave.SampleProviders;
 using MathNet.Numerics.IntegralTransforms;
-using System.Security.Cryptography;
 using System.Text;
-using System.Collections.Generic;
 using System.Drawing;
-using SoundTouch.Net.NAudioSupport;
-using System.Linq;
-using System.Runtime.ConstrainedExecution;
+
 
 class Program
 {
     static void Main(string[] args)
     {
-        string inputFilePath = @"C:\Users\ксюша\Downloads\Telegram Desktop\аудио\popipo.wav";
-        string inputFilePathS = @"C:\Users\ксюша\Downloads\Telegram Desktop\аудио\popipolen.wav";
+        string inputFilePath = @"C:\Users\ксюша\Downloads\Telegram Desktop\аудио\miau.wav";
+        string inputFilePathS = @"C:\Users\ксюша\Downloads\Telegram Desktop\аудио\miau2.wav";
         string outputFilePath = @"C:\Users\ксюша\Downloads\Telegram Desktop\fingerprints\fingerprint_";
-        string f = @"C:\Users\ксюша\Downloads\Telegram Desktop\fingerprints\fingerprint_67285";
-        string s = @"C:\Users\ксюша\Downloads\Telegram Desktop\fingerprints\fingerprint_41294";
+        string f = @"C:\Users\ксюша\Downloads\Telegram Desktop\fingerprints\fingerprint_94181";
+        string s = @"C:\Users\ксюша\Downloads\Telegram Desktop\fingerprints\fingerprint_81966";
 
         //var result = АudioСonversion.Conversion(inputFilePath);
         //var result2 = АudioСonversion.Conversion(inputFilePathS);
@@ -166,6 +162,7 @@ class Program
             List<System.Numerics.Complex> complexArray = SpectralAnalysis(audio);
             SaveFingerprintToBinaryFile(GroupPeaksIntoHashes(complexArray), filePathForSave);
         }
+
         public static double CompareFingerprints(string firstPath, string secondPath)
         {
             byte[] file1Bytes = File.ReadAllBytes(firstPath);
@@ -173,18 +170,54 @@ class Program
 
             int lenth = file1Bytes.Length < file2Bytes.Length ? file1Bytes.Length : file2Bytes.Length;
 
+            int step = lenth / 30;
             double persantage = 0;
             int numDifrent = 0;
+            double max = 0;
+            double maxInBlock = 0;
+            double summax = 0;
+
+            for (int maini = 0; maini <= file1Bytes.Length - step; maini += step)
+            {
+                maxInBlock = 0;
+                for (int lostl = 0; lostl <= file2Bytes.Length - step; lostl += step)
+                {
+
+                    int numDifferent = 0;
+                    for (int mainj = 0; mainj < step; mainj++)
+                    {
+                        if (file1Bytes[maini + mainj] != file2Bytes[lostl + mainj])
+                        {
+                            numDifferent++;
+                        }
+                    }
+
+                    double percentage = 100.0 * (step - numDifferent) / step;
+                    if (percentage > max)
+                        max = percentage;
+                    if (percentage > maxInBlock)
+                        maxInBlock = percentage;
+                    Console.WriteLine($"Блок [{maini}..{maini + step}] vs [{lostl}..{lostl + step}]: {percentage:F2}%");
+                }
+                summax += maxInBlock;
+            }
+
+            Console.WriteLine($"Максимальный процент совпадения блоков:{max}");
+            Console.WriteLine($"Процент совпадения блоков:{summax/30}");
+
+            persantage = 0;
+            numDifrent = 0;
 
             for (int i = 0; i < lenth; i++)
             {
+               
                 if (file1Bytes[i] != file2Bytes[i])
                 {
                     numDifrent++;
                 }
             }
 
-            persantage = 100 - numDifrent/(lenth / 100);
+            persantage = 100 - numDifrent / (lenth / 100);
 
             return persantage;
         }
@@ -193,16 +226,15 @@ class Program
             double num = Math.Floor(frequency / 100)*100;
             double result = frequency - num;
 
-            return (result <= 50) ? num : 100 + num;
-
-            //return (result >= 25 && result <= 50) ? 50 + num : (result < 25) ? num : 100 + num;
+            //return (result < 50) ? num : num + 100;
+            return (result >= 25 && result <= 50) ? 50 + num : (result < 25) ? num : 100 + num;
         }
         public static List<System.Numerics.Complex> SpectralAnalysis(AudioFileReader audio)
         {
             float[] sample = new float[audio.WaveFormat.SampleRate * (int)audio.TotalTime.TotalSeconds];
             audio.Read(sample, 0, sample.Length);
 
-            int frameSize = 1024;
+            int frameSize = 32768;
             int overlap = frameSize / 2;
             int stepSize = frameSize - overlap;
 
@@ -315,21 +347,37 @@ class Program
 
                 string hashInput = $"{freq1:F2}";
 
-                uint hash = CalculateHash(hashInput);
+                uint hash = CalculateFrequencyHash(hashInput);
 
                 fingerprint.Add(hash);
             }
 
             return fingerprint;
         }
-        private static uint CalculateHash(string input)
+        private static uint CalculateFrequencyHash(string frequency)
         {
-            using (MD5 md5 = MD5.Create())
+            if (string.IsNullOrEmpty(frequency))
+                throw new ArgumentException("Frequency string cannot be null or empty.");
+
+            byte[] frequencyBytes = Encoding.UTF8.GetBytes(frequency);
+
+            // Используем простой хэш на основе XOR (или CRC32 для большей устойчивости)
+            uint hash = 0;
+            foreach (byte b in frequencyBytes)
             {
-                byte[] hashBytes = md5.ComputeHash(Encoding.UTF8.GetBytes(input));
-                return BitConverter.ToUInt32(hashBytes, 0);
+                hash = (hash << 5) + hash ^ b; // Простое хэширование
             }
+            return hash;
         }
+
+        //private static uint CalculateHash(string input)
+        //{
+        //    using (MD5 md5 = MD5.Create())
+        //    {
+        //        byte[] hashBytes = md5.ComputeHash(Encoding.UTF8.GetBytes(input));
+        //        return BitConverter.ToUInt32(hashBytes, 0);
+        //    }
+        //}
         private static void SaveFingerprintToBinaryFile(List<uint> fingerprint, string filePath)
         {
             Random random = new Random();
