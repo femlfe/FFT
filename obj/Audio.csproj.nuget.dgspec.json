@@ -51,6 +51,10 @@
         "net8.0": {
           "targetAlias": "net8.0",
           "dependencies": {
+            "CSCore": {
+              "target": "Package",
+              "version": "[1.2.1.2, )"
+            },
             "MathNet.Numerics": {
               "target": "Package",
               "version": "[5.0.0, )"
@@ -58,6 +62,18 @@
             "NAudio": {
               "target": "Package",
               "version": "[2.2.1, )"
+            },
+            "SoundTouch.Net": {
+              "target": "Package",
+              "version": "[2.3.2, )"
+            },
+            "SoundTouch.Net.NAudioSupport": {
+              "target": "Package",
+              "version": "[2.2.0, )"
+            },
+            "System.Drawing.Common": {
+              "target": "Package",
+              "version": "[9.0.5, )"
             }
           },
           "imports": [

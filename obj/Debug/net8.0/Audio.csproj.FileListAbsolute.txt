@@ -21,3 +21,11 @@ C:\Users\ксюша\source\repos\Audio\Audio\obj\Debug\net8.0\refint\Audio.dll
 C:\Users\ксюша\source\repos\Audio\Audio\obj\Debug\net8.0\Audio.pdb
 C:\Users\ксюша\source\repos\Audio\Audio\obj\Debug\net8.0\Audio.genruntimeconfig.cache
 C:\Users\ксюша\source\repos\Audio\Audio\obj\Debug\net8.0\ref\Audio.dll
+C:\Users\ксюша\source\repos\Audio\Audio\obj\Debug\net8.0\Audio.sourcelink.json
+C:\Users\ксюша\source\repos\Audio\Audio\bin\Debug\net8.0\Microsoft.Win32.SystemEvents.dll
+C:\Users\ксюша\source\repos\Audio\Audio\bin\Debug\net8.0\System.Drawing.Common.dll
+C:\Users\ксюша\source\repos\Audio\Audio\bin\Debug\net8.0\System.Private.Windows.Core.dll
+C:\Users\ксюша\source\repos\Audio\Audio\bin\Debug\net8.0\runtimes\win\lib\net8.0\Microsoft.Win32.SystemEvents.dll
+C:\Users\ксюша\source\repos\Audio\Audio\bin\Debug\net8.0\CSCore.dll
+C:\Users\ксюша\source\repos\Audio\Audio\bin\Debug\net8.0\SoundTouch.Net.dll
+C:\Users\ксюша\source\repos\Audio\Audio\bin\Debug\net8.0\SoundTouch.Net.NAudioSupport.dll

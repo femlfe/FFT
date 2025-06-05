@@ -8,11 +8,23 @@
     ".NETCoreApp,Version=v8.0": {
       "Audio/1.0.0": {
         "dependencies": {
+          "CSCore": "1.2.1.2",
           "MathNet.Numerics": "5.0.0",
-          "NAudio": "2.2.1"
+          "NAudio": "2.2.1",
+          "SoundTouch.Net": "2.3.2",
+          "SoundTouch.Net.NAudioSupport": "2.2.0",
+          "System.Drawing.Common": "9.0.5"
         },
         "runtime": {
           "Audio.dll": {}
+        }
+      },
+      "CSCore/1.2.1.2": {
+        "runtime": {
+          "lib/net35-client/CSCore.dll": {
+            "assemblyVersion": "1.2.1.2",
+            "fileVersion": "0.0.0.0"
+          }
         }
       },
       "MathNet.Numerics/5.0.0": {
@@ -28,6 +40,22 @@
         "dependencies": {
           "System.Security.AccessControl": "4.7.0",
           "System.Security.Principal.Windows": "4.7.0"
+        }
+      },
+      "Microsoft.Win32.SystemEvents/9.0.5": {
+        "runtime": {
+          "lib/net8.0/Microsoft.Win32.SystemEvents.dll": {
+            "assemblyVersion": "9.0.0.0",
+            "fileVersion": "9.0.525.21509"
+          }
+        },
+        "runtimeTargets": {
+          "runtimes/win/lib/net8.0/Microsoft.Win32.SystemEvents.dll": {
+            "rid": "win",
+            "assetType": "runtime",
+            "assemblyVersion": "9.0.0.0",
+            "fileVersion": "9.0.525.21509"
+          }
         }
       },
       "NAudio/2.2.1": {
@@ -99,6 +127,41 @@
           }
         }
       },
+      "SoundTouch.Net/2.3.2": {
+        "runtime": {
+          "lib/netcoreapp2.1/SoundTouch.Net.dll": {
+            "assemblyVersion": "2.3.0.0",
+            "fileVersion": "2.3.2.0"
+          }
+        }
+      },
+      "SoundTouch.Net.NAudioSupport/2.2.0": {
+        "dependencies": {
+          "NAudio": "2.2.1",
+          "SoundTouch.Net": "2.3.2"
+        },
+        "runtime": {
+          "lib/netstandard2.0/SoundTouch.Net.NAudioSupport.dll": {
+            "assemblyVersion": "2.2.0.0",
+            "fileVersion": "2.2.0.4"
+          }
+        }
+      },
+      "System.Drawing.Common/9.0.5": {
+        "dependencies": {
+          "Microsoft.Win32.SystemEvents": "9.0.5"
+        },
+        "runtime": {
+          "lib/net8.0/System.Drawing.Common.dll": {
+            "assemblyVersion": "9.0.0.0",
+            "fileVersion": "9.0.525.21601"
+          },
+          "lib/net8.0/System.Private.Windows.Core.dll": {
+            "assemblyVersion": "9.0.0.0",
+            "fileVersion": "9.0.525.21601"
+          }
+        }
+      },
       "System.Security.AccessControl/4.7.0": {
         "dependencies": {
           "Microsoft.NETCore.Platforms": "3.1.0",
@@ -113,6 +176,13 @@
       "type": "project",
       "serviceable": false,
       "sha512": ""
+    },
+    "CSCore/1.2.1.2": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-DoQKUcdZLQawo3mOg8CvujJD9YkvTt6NtEu7S+OCo8+ySl8eCeUw4LFyL2E1OcAkPU918HZM6sUNcvIMcXWg6g==",
+      "path": "cscore/1.2.1.2",
+      "hashPath": "cscore.1.2.1.2.nupkg.sha512"
     },
     "MathNet.Numerics/5.0.0": {
       "type": "package",
@@ -134,6 +204,13 @@
       "sha512": "sha512-KSrRMb5vNi0CWSGG1++id2ZOs/1QhRqROt+qgbEAdQuGjGrFcl4AOl4/exGPUYz2wUnU42nvJqon1T3U0kPXLA==",
       "path": "microsoft.win32.registry/4.7.0",
       "hashPath": "microsoft.win32.registry.4.7.0.nupkg.sha512"
+    },
+    "Microsoft.Win32.SystemEvents/9.0.5": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-D4OYNpmvAsF9MkaY2W8Jue2XuNHDhygvwzo019hs+lP85KaVnOlXmqsjDKr1dHb1DPxDnOKpe6mAgJN7S6ttwg==",
+      "path": "microsoft.win32.systemevents/9.0.5",
+      "hashPath": "microsoft.win32.systemevents.9.0.5.nupkg.sha512"
     },
     "NAudio/2.2.1": {
       "type": "package",
@@ -176,6 +253,27 @@
       "sha512": "sha512-xFHRFwH4x6aq3IxRbewvO33ugJRvZFEOfO62i7uQJRUNW2cnu6BeBTHUS0JD5KBucZbHZaYqxQG8dwZ47ezQuQ==",
       "path": "naudio.winmm/2.2.1",
       "hashPath": "naudio.winmm.2.2.1.nupkg.sha512"
+    },
+    "SoundTouch.Net/2.3.2": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-5A29Pll/n4kEEPvCD5DFot3MJG+VgiaRG6LbNQVkF94VerC1b5iZtJKfdLQXZPFrl3LiVbKm3txKBe5/pbv5rw==",
+      "path": "soundtouch.net/2.3.2",
+      "hashPath": "soundtouch.net.2.3.2.nupkg.sha512"
+    },
+    "SoundTouch.Net.NAudioSupport/2.2.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-Taqc48Ib4fqUo6jHQh63HHZFVe8ddHd+GcYb9euF6loeXAy76thUaTueYuIE4HlG751PSF4LkjbV4o8qXLjtrw==",
+      "path": "soundtouch.net.naudiosupport/2.2.0",
+      "hashPath": "soundtouch.net.naudiosupport.2.2.0.nupkg.sha512"
+    },
+    "System.Drawing.Common/9.0.5": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-T/6nqx0B7/uTe5JjBwrKZilLuwfhHLOVmNKlT/wr4A9Dna94mgTdz3lTfrdJ72QRx7IHCv/LzoJPmFSfK/N6WA==",
+      "path": "system.drawing.common/9.0.5",
+      "hashPath": "system.drawing.common.9.0.5.nupkg.sha512"
     },
     "System.Security.AccessControl/4.7.0": {
       "type": "package",
