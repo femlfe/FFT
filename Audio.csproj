@@ -16,4 +16,8 @@
     <PackageReference Include="System.Drawing.Common" Version="9.0.5" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Auofingerprint.FFT\Audiofingerprint.csproj" />
+  </ItemGroup>
+
 </Project>
