@@ -1,4 +1,4 @@
-﻿using Audiofingerprint;
+﻿using Audiofingerprint.Services;
 using NAudio.Wave;
 using System;
 using System.IO;
@@ -14,14 +14,14 @@ class Program
     {
         public static void ShowMenu()
         {
-            string outputFilePath = @"C:\Users\ксюша\Downloads\Telegram Desktop\fingerprints\fingerprint_";
+            string outputFilePath = @"C:\Users\ксюша\Downloads\Telegram Desktop\fingerprints";
 
             while (true)
             {
                 Console.WriteLine("Меню:");
                 Console.WriteLine("1. Сгенерировать отпечаток аудио");
                 Console.WriteLine("2. Сравнить два отпечатка на сходство");
-                Console.WriteLine("3. Найти самый похожий файл в директории");
+                Console.WriteLine("3. Найти самый похожий отпечаток в директории");
                 Console.WriteLine("4. Выход");
                 Console.Write("Выберите опцию (1, 2, 3 или 4): ");
 
@@ -64,10 +64,15 @@ class Program
                     Console.WriteLine("Файл не найден. Попробуйте снова.");
                     return;
                 }
+                if (Path.GetExtension(audioFilePath) != ".wav")
+                {
+                    Console.WriteLine("Программа обрабатывает только .wav файлы");
+                    return;
+                }
 
-                AudioFileReader audio = АudioСonversion.ConversionForConsole(audioFilePath);
+                FingerprintService fingerprintService = new FingerprintService();
 
-                Fingerprints.GenerateFingerprint(audio, output, Path.GetFileNameWithoutExtension(audioFilePath));
+                fingerprintService.GenerateFingerprint(audioFilePath, output);
 
                 Console.WriteLine("Отпечаток успешно сгенерирован и сохранен.");
             }
@@ -81,7 +86,7 @@ class Program
         {
             try
             {
-                Console.Write("Введите путь к первому файлу: ");
+                Console.Write("Введите путь к первому файлу опечатка: ");
                 string firstPath = Console.ReadLine();
 
                 if (!File.Exists(firstPath))
@@ -89,8 +94,12 @@ class Program
                     Console.WriteLine("Первый файл не найден. Попробуйте снова.");
                     return;
                 }
-
-                Console.Write("Введите путь ко второму файлу: ");
+                if (Path.GetExtension(firstPath) != ".bin")
+                {
+                    Console.WriteLine("Программа сравнивает только .bin файлы");
+                    return;
+                }
+                Console.Write("Введите путь ко второму файлу опечатка: ");
                 string secondPath = Console.ReadLine();
 
                 if (!File.Exists(secondPath))
@@ -98,8 +107,14 @@ class Program
                     Console.WriteLine("Второй файл не найден. Попробуйте снова.");
                     return;
                 }
+                if (Path.GetExtension(secondPath) != ".bin")
+                {
+                    Console.WriteLine("Программа сравнивает только .bin файлы");
+                    return;
+                }
 
-                double similarity = Fingerprints.CompareFingerprints(firstPath, secondPath);
+                FingerprintService fingerprintService = new FingerprintService();
+                double similarity = fingerprintService.CompareFingerprints(firstPath, secondPath);
 
                 Console.WriteLine($"Процент совпадения отпечатков: {similarity:F2}%");
             }
@@ -121,6 +136,11 @@ class Program
                     Console.WriteLine("Файл не найден. Попробуйте снова.");
                     return;
                 }
+                if (Path.GetExtension(targetFilePath) != ".bin")
+                {
+                    Console.WriteLine("Программа сравнивает только .bin файлы");
+                    return;
+                }
 
                 string directoryPath = "C:\\Users\\ксюша\\Downloads\\Telegram Desktop\\fingerprints";
 
@@ -131,7 +151,9 @@ class Program
 
                 foreach (string file in files)
                 {
-                    double similarity = Fingerprints.CompareFingerprints(targetFilePath, file);
+
+                    FingerprintService fingerprintService = new FingerprintService();
+                    double similarity = fingerprintService.CompareFingerprints(targetFilePath, file);
                     Console.WriteLine($"Сравнение с {Path.GetFileName(file)}: {similarity:F2}%");
 
                     if (similarity > maxSimilarity)
